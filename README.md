@@ -21,48 +21,61 @@ claude-config/
 └── README.md
 ```
 
-## 使い方
+## セットアップ手順
 
-### 初回セットアップ（各端末で1回）
-
-```powershell
-# 1. このリポジトリをクローン
-git clone https://github.com/YOUR_USERNAME/claude-config.git
-cd claude-config
-
-# 2. デプロイ（端末名を指定）
-.\deploy.ps1 -Machine laptop   # ノートPC
-.\deploy.ps1 -Machine office   # 職場PC
-.\deploy.ps1 -Machine home     # 自宅PC
-```
-
-これで `~/.claude/CLAUDE.md` に共通ルール＋端末固有設定が結合配置され、
-`~/.claude/commands/` にカスタムコマンドがコピーされます。
-
-### ルール変更時（どの端末からでもOK）
+### 1. リポジトリをクローン
 
 ```powershell
-# 1. common.md や端末固有ファイルを編集
-# 2. コミット＆プッシュ
-git add -A && git commit -m "update rules" && git push
-
-# 3. 他の端末で反映
-git pull
-.\deploy.ps1 -Machine <この端末名>
+git clone https://github.com/hnabenabe/claude-config.git C:\ClaudeWork\tools\claude-config
 ```
 
-### multi-agent-shogun のセットアップ
+### 2. Claude Code でセットアップ
 
-```bash
-# WSL2 で実行
-git clone https://github.com/yohey-w/multi-agent-shogun.git /mnt/c/tools/multi-agent-shogun
-cd /mnt/c/tools/multi-agent-shogun
+クローンしたディレクトリで Claude Code を起動し、以下のように指示してください。
 
-# 脱戦国パッチ適用
-bash /path/to/claude-config/shogun-patches/patch_desengoku.sh
-
-# 詳細は shogun-patches/setup_guide.md を参照
 ```
+cd C:\ClaudeWork\tools\claude-config
+claude
+```
+
+Claude Code に対して：
+
+> この端末の環境に合わせて deploy.ps1 を実行して、CLAUDE.md をセットアップして。
+
+Claude Code が自動的に以下を行います：
+- 端末の環境（OS、Pythonパス等）を判別
+- 適切な端末名（laptop / office / home）で `deploy.ps1` を実行
+- `~/.claude/CLAUDE.md` に共通ルール＋端末固有設定を結合配置
+- `~/.claude/commands/` にカスタムコマンドをコピー
+
+### 端末と設定の対応
+
+| 端末名 | 対象 | 特徴 |
+|--------|------|------|
+| `laptop` | 高性能ノートPC | WinPython環境、WSL2あり |
+| `office` | 職場デスクトップ | 院内ネットワーク、プロキシ考慮 |
+| `home` | 自宅PC | Tailscale、SSH検証用 |
+
+## ルール変更時
+
+どの端末からでも Claude Code に指示するだけでOKです。
+
+> common.md の○○ルールを修正して、コミット＆プッシュして。
+
+他の端末で反映するときも同様に：
+
+> git pull して、この端末に合わせて再デプロイして。
+
+## 端末の追加
+
+新しいPCを追加したい場合も Claude Code に任せられます。
+
+> 新しい端末「server」用の設定ファイルを追加して。環境は Ubuntu 24.04、Python は pyenv 管理。
+
+Claude Code が以下を行います：
+1. `claude-md/server.md` を作成
+2. `deploy.ps1` の `ValidateSet` に `server` を追加
+3. コミット＆プッシュ
 
 ## deploy.ps1 の動作
 
@@ -71,9 +84,8 @@ bash /path/to/claude-config/shogun-patches/patch_desengoku.sh
 3. `common.md` + 指定端末の `.md` を結合して `CLAUDE.md` に配置
 4. `commands/` 内の `.md` を `~/.claude/commands/` にコピー
 
-## 端末の追加
+## multi-agent-shogun のセットアップ
 
-新しいPCを追加したい場合：
-1. `claude-md/` に新しい `.md` を作成（例: `server.md`）
-2. `deploy.ps1` の `ValidateSet` に名前を追加
-3. コミット＆プッシュ
+Claude Code に以下のように指示してください。
+
+> WSL2 で multi-agent-shogun をセットアップして。詳細は shogun-patches/setup_guide.md を参照して。
