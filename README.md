@@ -56,10 +56,6 @@ claude-config/
 │   └── home.md              # 自宅PC（SSH検証用）
 ├── commands/
 │   └── handover.md          # /handover コマンド
-├── shogun-patches/
-│   ├── patch_desengoku.sh   # 脱戦国パッチ
-│   ├── setup_guide.md       # 導入ガイド
-│   └── setup_guide_wsl2.md  # WSL2セットアップ
 ├── deploy.ps1               # デプロイスクリプト
 └── README.md
 ```
@@ -155,6 +151,5 @@ Claude Code が以下を行います：
 
 ## multi-agent-shogun のセットアップ
 
-Claude Code に以下のように指示してください。
-
-> WSL2 で multi-agent-shogun をセットアップして。詳細は shogun-patches/setup_guide.md を参照して。
+shogun関連のパッチとガイドは別リポジトリに移動しました：
+https://github.com/hnabenabe/shogun-patches
