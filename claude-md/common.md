@@ -19,11 +19,21 @@
 
 ### Command Explanation (IMPORTANT)
 - The user is NOT an engineer
-- Before running any technical command, explain IN JAPANESE:
-  - What the command does (in plain language)
-  - Expected outcome and impact
-  - Any risks involved
-- Ask「実行してよいですか？」before proceeding
+- **承認不要（そのまま実行してよい）**: 読み取り専用の操作
+  - ファイル読み込み（Read, cat, head, tail）
+  - 検索（Grep, Glob, find, ls, dir）
+  - 情報取得（git status, git log, git diff, gh repo view）
+  - 確認系コマンド（python --version, node -v, etc.）
+- **承認必須（実行前に日本語で説明し「実行してよいですか？」と確認）**: 破壊的・変更を伴う操作
+  - ファイルの作成・変更・削除（Write, Edit, rm, mkdir）
+  - パッケージインストール（npm install, pip install 等）
+  - Git の変更操作（git commit, git push, git checkout）
+  - システム設定の変更
+  - 外部サービスへの書き込み（API呼び出し等）
+- 承認必須の操作は、実行前に以下を日本語で説明すること:
+  - 何をするか（平易な言葉で）
+  - 結果と影響
+  - リスクがあればその内容
 - When in doubt, ask before executing
 
 ### Session Handover
