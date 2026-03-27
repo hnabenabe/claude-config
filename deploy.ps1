@@ -11,8 +11,12 @@
 
 param(
     [Parameter(Mandatory=$true)]
-    [ValidateSet("laptop", "office", "home")]
-    [string]$Machine
+    [ValidateSet("laptop", "office", "home", "server")]
+    [string]$Machine,
+
+    [Parameter(Mandatory=$false)]
+    [ValidateSet("core", "dev", "full")]
+    [string]$Profile = "core"
 )
 
 $ErrorActionPreference = "Stop"
@@ -65,6 +69,7 @@ Write-Host "[OK] Deployed CLAUDE.md for [$Machine]" -ForegroundColor Green
 # -------------------------------------------------------
 # 4. commands/ をコピー
 # -------------------------------------------------------
+
 if (Test-Path $CommandsSource) {
     if (-not (Test-Path $CommandsDir)) {
         New-Item -ItemType Directory -Path $CommandsDir -Force | Out-Null
@@ -97,14 +102,43 @@ if (Test-Path $SkillsSource) {
 }
 
 # -------------------------------------------------------
-# 6. 結果表示
+# 6. hooks/ をコピー
+# -------------------------------------------------------
+$HooksSource = Join-Path $ScriptDir "hooks"
+$HooksDir = Join-Path $ClaudeDir "hooks"
+
+if (Test-Path $HooksSource) {
+    if (-not (Test-Path $HooksDir)) {
+        New-Item -ItemType Directory -Path $HooksDir -Force | Out-Null
+    }
+    $HookFiles = Get-ChildItem $HooksSource -Filter "*.py"
+    foreach ($File in $HookFiles) {
+        Copy-Item $File.FullName (Join-Path $HooksDir $File.Name) -Force
+        Write-Host "[OK] Hook: $($File.Name)" -ForegroundColor Magenta
+    }
+}
+
+# -------------------------------------------------------
+# 7. sessions/ ディレクトリ作成
+# -------------------------------------------------------
+$SessionsDir = Join-Path $ClaudeDir "sessions"
+if (-not (Test-Path $SessionsDir)) {
+    New-Item -ItemType Directory -Path $SessionsDir -Force | Out-Null
+    Write-Host "[OK] Created $SessionsDir" -ForegroundColor Green
+}
+
+# -------------------------------------------------------
+# 8. 結果表示
 # -------------------------------------------------------
 Write-Host ""
 Write-Host "=== Deploy complete ===" -ForegroundColor Green
 Write-Host "  Target:  $TargetMd"
 Write-Host "  Machine: $Machine"
+Write-Host "  Profile:  $Profile"
 Write-Host "  Commands: $(if (Test-Path $CommandsDir) { (Get-ChildItem $CommandsDir -Filter '*.md').Count } else { 0 }) files"
 Write-Host "  Skills:   $(if (Test-Path $SkillsDir) { (Get-ChildItem $SkillsDir -Directory).Count } else { 0 }) skills"
+Write-Host "  Hooks:    $(if (Test-Path $HooksDir) { (Get-ChildItem $HooksDir -Filter '*.py').Count } else { 0 }) files"
+Write-Host "  Sessions: $SessionsDir"
 Write-Host ""
 Write-Host "Contents:" -ForegroundColor Gray
 Get-Content $TargetMd | Select-Object -First 5

@@ -1,7 +1,34 @@
 {
   "permissions": {
     "allow": [
-      "Bash(gh auth:*)"
+      "Bash(gh auth:*)",
+      "Bash(git push:*)",
+      "Bash(gh api:*)",
+      "Bash(\"C:/ClaudeWork/tools/claude-agents/investigation/researcher.md\")",
+      "Bash(\"C:/ClaudeWork/tools/claude-agents/investigation/kakarichou.md\")",
+      "Bash(\"C:/ClaudeWork/tools/claude-agents/investigation/kakariin.md\")",
+      "Bash(\"C:/ClaudeWork/tools/claude-agents/investigation/auditor.md\")",
+      "Bash(\"C:/ClaudeWork/tools/claude-skills/skills/team-investigation/SKILL.md\")",
+      "Bash(while read:*)",
+      "Bash(do cp:*)",
+      "Bash(done)",
+      "Read(//c/ClaudeWork/tools/claude-config/$USERPROFILE/.claude/**)",
+      "Bash(cp -r \"C:/ClaudeWork/tools/claude-skills/skills/team-dev\" \"$USERPROFILE/.claude/skills/\")",
+      "Bash(cp -r \"C:/ClaudeWork/tools/claude-skills/skills/team-stakeholder\" \"$USERPROFILE/.claude/skills/\")",
+      "Bash(cp -r \"C:/ClaudeWork/tools/claude-skills/skills/team-investigation\" \"$USERPROFILE/.claude/skills/\")",
+      "Bash(gh repo:*)",
+      "Bash(claude agents:*)",
+      "Bash(cp -r \"C:/ClaudeWork/tools/claude-config/skills/claude-md-improver\" \"C:/ClaudeWork/tools/claude-skills/skills/\")",
+      "Bash(cp -r \"C:/ClaudeWork/tools/claude-config/skills/skill-creator\" \"C:/ClaudeWork/tools/claude-skills/skills/\")",
+      "Bash(cp -r \"C:/ClaudeWork/tools/claude-config/skills/mcp-builder\" \"C:/ClaudeWork/tools/claude-skills/skills/\")",
+      "Bash(cp -r \"C:/ClaudeWork/tools/claude-config/skills/webapp-testing\" \"C:/ClaudeWork/tools/claude-skills/skills/\")",
+      "Bash(cd:*)",
+      "Bash(cp \"C:/ClaudeWork/tools/claude-config/commands/inspect.md\" \"$USERPROFILE/.claude/commands/\")",
+      "Bash(cp \"C:/ClaudeWork/tools/claude-config/commands/log.md\" \"$USERPROFILE/.claude/commands/\")",
+      "Read(//c/ClaudeWork/tools/claude-skills/$USERPROFILE/.claude/**)",
+      "Bash(python -c \"import py_compile; py_compile.compile\\(r''C:\\\\ClaudeWork\\\\tools\\\\claude-config\\\\hooks\\\\risk-guard.py'', doraise=True\\)\")",
+      "Bash(echo \"RC=$?\")",
+      "Bash(\"D:\\\\WPy64-31180\\\\python-3.11.8.amd64\\\\python.exe\" -c \"import py_compile; py_compile.compile\\(r'C:\\\\ClaudeWork\\\\tools\\\\claude-config\\\\hooks\\\\risk-guard.py', doraise=True\\); print\\('OK'\\)\")"
     ]
   }
 }

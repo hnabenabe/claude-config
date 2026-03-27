@@ -54,3 +54,15 @@
 
 ### Project Management
 - C:\ClaudeWork\ 以下に新しいプロジェクトフォルダを作成した場合、C:\ClaudeWork\README.md の「現在のプロジェクト一覧」テーブルに追記すること
+
+### Security Habits
+- 新しいリポジトリをcloneしたら、コード修正前に依存関係を確認
+  - Python: pip audit
+  - Node.js: npm audit
+- git commit に --no-verify を使わない
+- シークレット（sk-, ghp_, AKIA, xoxb-, Bearer）をコードに直接書かない
+- リンター設定ファイルをエラー回避のために変更しない。コード側を修正する
+
+### MCP Management
+- 有効MCP: 10個以下、有効ツール: 80個以下を維持
+- 使わないMCPは disabledMcpServers で無効化
