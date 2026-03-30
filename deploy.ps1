@@ -119,7 +119,36 @@ if (Test-Path $HooksSource) {
 }
 
 # -------------------------------------------------------
-# 7. sessions/ ディレクトリ作成
+# 7. agents/ をコピー (Profile が core 以外の場合)
+# -------------------------------------------------------
+$AgentsRepoDir = "C:\ClaudeWork\tools\claude-agents"
+$AgentsDir = Join-Path $ClaudeDir "agents"
+$AgentSubDirs = @("coding", "stakeholder", "investigation")
+
+if ($Profile -ne "core" -and (Test-Path $AgentsRepoDir)) {
+    if (-not (Test-Path $AgentsDir)) {
+        New-Item -ItemType Directory -Path $AgentsDir -Force | Out-Null
+    }
+
+    $AgentCount = 0
+    foreach ($SubDir in $AgentSubDirs) {
+        $SrcDir = Join-Path $AgentsRepoDir $SubDir
+        if (Test-Path $SrcDir) {
+            $MdFiles = Get-ChildItem $SrcDir -Filter "*.md"
+            foreach ($File in $MdFiles) {
+                Copy-Item $File.FullName (Join-Path $AgentsDir $File.Name) -Force
+                Write-Host "[OK] Agent: $SubDir/$($File.Name)" -ForegroundColor Blue
+                $AgentCount++
+            }
+        }
+    }
+    Write-Host "[OK] Agents: $AgentCount files deployed" -ForegroundColor Blue
+} else {
+    Write-Host "[SKIP] Agents: skipped (Profile=$Profile)" -ForegroundColor DarkGray
+}
+
+# -------------------------------------------------------
+# 8. sessions/ ディレクトリ作成
 # -------------------------------------------------------
 $SessionsDir = Join-Path $ClaudeDir "sessions"
 if (-not (Test-Path $SessionsDir)) {
@@ -128,7 +157,7 @@ if (-not (Test-Path $SessionsDir)) {
 }
 
 # -------------------------------------------------------
-# 8. 結果表示
+# 9. 結果表示
 # -------------------------------------------------------
 Write-Host ""
 Write-Host "=== Deploy complete ===" -ForegroundColor Green
@@ -138,6 +167,7 @@ Write-Host "  Profile:  $Profile"
 Write-Host "  Commands: $(if (Test-Path $CommandsDir) { (Get-ChildItem $CommandsDir -Filter '*.md').Count } else { 0 }) files"
 Write-Host "  Skills:   $(if (Test-Path $SkillsDir) { (Get-ChildItem $SkillsDir -Directory).Count } else { 0 }) skills"
 Write-Host "  Hooks:    $(if (Test-Path $HooksDir) { (Get-ChildItem $HooksDir -Filter '*.py').Count } else { 0 }) files"
+Write-Host "  Agents:   $(if (Test-Path $AgentsDir) { (Get-ChildItem $AgentsDir -Filter '*.md').Count } else { 0 }) files"
 Write-Host "  Sessions: $SessionsDir"
 Write-Host ""
 Write-Host "Contents:" -ForegroundColor Gray
