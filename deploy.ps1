@@ -11,7 +11,7 @@
 
 param(
     [Parameter(Mandatory=$true)]
-    [ValidateSet("laptop", "office", "home", "server")]
+    [ValidateSet("laptop", "office", "home", "server", "daiv")]
     [string]$Machine,
 
     [Parameter(Mandatory=$false)]
